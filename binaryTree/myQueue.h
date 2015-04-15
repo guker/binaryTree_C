@@ -43,7 +43,7 @@ void enqueue(QType *q, element item){
 		return;
 	}
 	q->tail = (q->tail + 1) % MAX_QUEUESIZE;
-	q->queue[(q->tail)] = item;
+	q->queue[q->tail] = item;
 }
 
 element dequeue(QType *q){

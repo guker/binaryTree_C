@@ -12,6 +12,21 @@ treePTR makeNode(int data, treePTR leftNode, treePTR rightNode){
 	return root;
 }
 
+void __del_garbage_value(treePTR *root){
+	(*root)->data = 0;
+	(*root)->left = 0;
+	(*root)->right = 0;
+	(*root) = 0;
+}
+void deallocate_Tree(treePTR root){
+	if (root){
+		if(root->left) deallocate_Tree(root->left);
+		if (root->right) deallocate_Tree(root->right);
+		free(root);
+		__del_garbage_value(&root);
+	}
+}
+
 int getValue(treePTR node){
 	int value = node->data;
 	return value;
@@ -52,8 +67,8 @@ void preOrder_iter(treePTR root){
 	stackType s;
 	init_stack(&s);
 	if (!root) return;
-	else push(&s, root);
-	while (1){
+	push(&s, root);
+	while(1){
 		root = pop(&s);
 		printf("%d ", root->data);
 		if (root->right) push(&s, root->right);
@@ -75,7 +90,7 @@ void postOrder_iter(treePTR root){
 	init_stack(&s);
 	init_stack(&bs);
 	if (!root) return;
-	else push(&s, root);
+	push(&s, root);
 	while(!is_sEmpty(&s)){
 		root = pop(&s);
 		push(&bs, root);
@@ -91,7 +106,7 @@ void levelOrder(treePTR root){
 	QType q;
 	init_Q(&q);
 	if(!root) return;
-	else enqueue(&q, root);
+	enqueue(&q, root);
 	while(1){
 		root = dequeue(&q);
 		printf("%d ", root->data);
@@ -101,15 +116,15 @@ void levelOrder(treePTR root){
 	}
 }
 
-treePTR copy(treePTR input){
+treePTR copyTree(treePTR input){
 	if (input){
 		treePTR output = (treePTR)malloc(sizeof(treeNode));
 		output->data = input->data;
-		output->left = copy(input->left);
-		output->right = copy(input->right);
+		output->left = copyTree(input->left);
+		output->right = copyTree(input->right);
 		return output;
 	}
-	return NULL;
+	return 0;
 }
 
 int equalTree(treePTR x, treePTR y){ //TRUE : return 1, FALSE : return 0

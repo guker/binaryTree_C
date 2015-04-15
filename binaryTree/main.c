@@ -11,7 +11,6 @@ int main(){
 				 70   83					 22   111
 												    27
 	*/
-
 	treePTR node12 = makeNode(27, NULL, NULL);
 	treePTR node11 = makeNode(111, NULL, node12);
 	treePTR node10 = makeNode(22, NULL, NULL);
@@ -26,7 +25,7 @@ int main(){
 	treePTR node1 = makeNode(10, node2, node3);
 	treePTR forcopy = makeNode(0, NULL, NULL);
 
-	forcopy = copy(node1);
+	forcopy = copyTree(node1);
 	printf("----------preorder----------\n");
 	preOrder_iter(node1);
 	printf("\n");
@@ -54,5 +53,7 @@ int main(){
 	}
 	printf("The Max node value of this tree is ... %d\n", getMax(node1));
 	printf("The Sum of this tree's node value is ... %d\n", sumTree(node1));
+	printf("\n");
+	deallocate_Tree(node1);
 	return 0;
 }
